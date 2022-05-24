@@ -1,13 +1,13 @@
-package model;
+package StudentParentClass;
 
 import java.util.UUID;
 
-public class HistoryStudent implements Student{
+public class Student {
 
     private String name;
     private String id;
 
-    public HistoryStudent(String name) {
+    public Student(String name) {
         this.name = name;
         this.id = UUID.randomUUID().toString();
     }
@@ -28,8 +28,8 @@ public class HistoryStudent implements Student{
                 '}';
     }
 
-    @Override
     public String returnSubject() {
-        return "I am a history student!";
+        return "I am a Student";
     }
+
 }

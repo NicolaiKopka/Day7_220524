@@ -1,7 +1,9 @@
-import model.CSStudent;
-import model.HistoryStudent;
-import model.Student;
-import model.StudentDB;
+package StudentInterface;
+
+import StudentInterface.CSStudent;
+import StudentInterface.HistoryStudent;
+import StudentInterface.Student;
+import StudentInterface.StudentDB;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
