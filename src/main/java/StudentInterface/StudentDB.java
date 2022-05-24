@@ -9,7 +9,7 @@ public class StudentDB {
     private List<Student> studentsInDB;
 
     public StudentDB(List<Student> students) {
-        this.studentsInDB = students;
+        this.studentsInDB = new ArrayList<>(students);
     }
 
     public List<Student> list() {
