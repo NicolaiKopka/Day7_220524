@@ -2,33 +2,14 @@ package model;
 
 import java.util.UUID;
 
-public class Student {
-    private String name;
-    private String id;
+public interface Student {
 
-    public Student(String name) {
-        this.name = name;
-        this.id = UUID.randomUUID().toString();
-    }
+    String getName();
 
-    public String getName() {
-        return name;
-    }
-
-    public String getId() {
-        return id;
-    }
+    String getId();
 
     @Override
-    public String toString() {
-        return "Student{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                '}';
-    }
-
-    //    public String toString() {
-//        return name + " " + id + " " + email;
-//    }
+    public String toString();
+    String returnSubject();
 
 }
