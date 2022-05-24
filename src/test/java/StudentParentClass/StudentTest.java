@@ -1,5 +1,7 @@
-import model.CSStudent;
-import model.Student;
+package StudentParentClass;
+
+import StudentInterface.CSStudent;
+import StudentInterface.Student;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package model;
+package StudentInterface;
 
 import java.util.UUID;
 
