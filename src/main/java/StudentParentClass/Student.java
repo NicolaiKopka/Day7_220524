@@ -2,12 +2,14 @@ package StudentParentClass;
 
 import java.util.UUID;
 
-public class Student {
+public abstract class Student {
 
     private String name;
     private String id;
+    protected int numberOfModules;
 
-    public Student(String name) {
+    public Student(String name, int numberOfModules) {
+        this.numberOfModules = numberOfModules;
         this.name = name;
         this.id = UUID.randomUUID().toString();
     }
@@ -28,8 +30,8 @@ public class Student {
                 '}';
     }
 
-    public String returnSubject() {
-        return "I am a Student";
-    }
+    public abstract String returnSubject();
+
+    public abstract int returnNumberOfModules();
 
 }

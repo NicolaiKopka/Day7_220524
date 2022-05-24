@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 class StudentDBTest {
     @Test
     void shouldReturnListOfAllStudentObjects() {
-        Student student1 = new CSStudent("Raj");
-        Student student2 = new CSStudent("Mohini");
-        Student student3 = new HistoryStudent("Anjali");
+        Student student1 = new CSStudent("Raj", 15);
+        Student student2 = new CSStudent("Mohini", 15);
+        Student student3 = new HistoryStudent("Anjali", 22);
         Student[] studentArray = {student1, student2, student3};
         var studentDB = new StudentDB(studentArray);
         Student[] actual = studentDB.list();
@@ -17,9 +17,9 @@ class StudentDBTest {
 
     @Test
     void shouldReturnStudentsAsString() {
-        Student student1 = new CSStudent("Raj");
-        Student student2 = new CSStudent("Mohini");
-        Student student3 = new HistoryStudent("Anjali");
+        Student student1 = new CSStudent("Raj", 15);
+        Student student2 = new CSStudent("Mohini", 15);
+        Student student3 = new HistoryStudent("Anjali", 22);
         Student[] studentArray = {student1, student2, student3};
         var studentDB = new StudentDB(studentArray);
         String expected = "Raj: " + student1.getId() + ";\n" + "Mohini: " + student2.getId() + ";\n" + "Anjali: " + student3.getId() + ";\n";
@@ -29,9 +29,9 @@ class StudentDBTest {
 
     @Test
     void shouldAddAStudentToDB() {
-        Student student1 = new CSStudent("Raj");
-        Student student2 = new CSStudent("Mohini");
-        Student student3 = new HistoryStudent("Anjali");
+        Student student1 = new CSStudent("Raj", 15);
+        Student student2 = new CSStudent("Mohini", 15);
+        Student student3 = new HistoryStudent("Anjali", 22);
         Student[] studentArray = {student1, student2};
         var studentDB = new StudentDB(studentArray);
         studentDB.addStudent(student3);
@@ -42,9 +42,9 @@ class StudentDBTest {
 
     @Test
     void shouldRemoveAStudentFromDB() {
-        Student student1 = new CSStudent("Raj");
-        Student student2 = new CSStudent("Mohini");
-        Student student3 = new HistoryStudent("Anjali");
+        Student student1 = new CSStudent("Raj", 15);
+        Student student2 = new CSStudent("Mohini", 15);
+        Student student3 = new HistoryStudent("Anjali", 22);
         Student[] studentArray = {student1, student2, student3};
         var studentDB = new StudentDB(studentArray);
         studentDB.removeStudent(2);
@@ -55,8 +55,8 @@ class StudentDBTest {
 
     @Test
     void shouldReturnCSStringIfStudentIsOfClassCSStudent() {
-        Student student1 = new CSStudent("Raj");
-        Student student2 = new HistoryStudent("Anjali");
+        Student student1 = new CSStudent("Raj", 15);
+        Student student2 = new HistoryStudent("Anjali", 22);
         Student[] studentArray = {student1, student2};
         var studentDB = new StudentDB(studentArray);
         Student[] students = studentDB.list();
@@ -67,13 +67,37 @@ class StudentDBTest {
 
     @Test
     void shouldReturnHistoryStringIfStudentIsOfClassHistoryStudent() {
-        Student student1 = new CSStudent("Raj");
-        Student student2 = new HistoryStudent("Anjali");
+        Student student1 = new CSStudent("Raj", 15);
+        Student student2 = new HistoryStudent("Anjali", 22);
         Student[] studentArray = {student1, student2};
         var studentDB = new StudentDB(studentArray);
         Student[] students = studentDB.list();
         String expected = "I am a history student!";
         String actual = students[1].returnSubject();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldReturnCorrectNumberOfCSModules(){
+        Student student1 = new CSStudent("Raj", 15);
+        Student student2 = new HistoryStudent("Anjali", 22);
+        Student[] studentArray = {student1, student2};
+        var studentDB = new StudentDB(studentArray);
+        Student[] students = studentDB.list();
+        int expected = 15;
+        int actual = students[0].returnNumberOfModules();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldReturnCorrectNumberOfHistoryModules(){
+        Student student1 = new CSStudent("Raj", 15);
+        Student student2 = new HistoryStudent("Anjali", 22);
+        Student[] studentArray = {student1, student2};
+        var studentDB = new StudentDB(studentArray);
+        Student[] students = studentDB.list();
+        int expected = 22;
+        int actual = students[1].returnNumberOfModules();
         Assertions.assertEquals(expected, actual);
     }
 }
