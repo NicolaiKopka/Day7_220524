@@ -1,22 +1,24 @@
 package StudentInterface;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class StudentDB {
 
-    private Student[] studentsInDB;
+    private List<Student> studentsInDB;
 
-    public StudentDB(Student[] students) {
+    public StudentDB(List<Student> students) {
         this.studentsInDB = students;
     }
 
-    public Student[] list() {
+    public List<Student> list() {
         return studentsInDB;
     }
 
     public Student randomStudent(){
-        int randomIndex = (int) (Math.random() * studentsInDB.length);
-        return studentsInDB[randomIndex];
+        int randomIndex = (int) (Math.random() * studentsInDB.size());
+        return studentsInDB.get(randomIndex);
     }
 
     @Override
@@ -28,25 +30,10 @@ public class StudentDB {
         return allStudents;
     }
     public void addStudent(Student student) {
-        Student[] newStudentArray = Arrays.copyOf(studentsInDB, studentsInDB.length + 1);
-        for (int i = 0; i < newStudentArray.length; i++) {
-            if(newStudentArray[i] == null) {
-                newStudentArray[i] = student;
-            }
-        }
-        this.studentsInDB = newStudentArray;
+        studentsInDB.add(student);
     }
 
     public void removeStudent(int position) {
-        Student[] newStudentArray = Arrays.copyOf(studentsInDB, studentsInDB.length - 1);
-        int trackIndex = 0;
-        for (int i = 0; i < newStudentArray.length; i++) {
-            if(i == (position - 1)) {
-                trackIndex = i;
-            }
-            newStudentArray[i] = studentsInDB[i + trackIndex];
-
-        }
-        this.studentsInDB = newStudentArray;
+        studentsInDB.remove(position - 1);
     }
 }
