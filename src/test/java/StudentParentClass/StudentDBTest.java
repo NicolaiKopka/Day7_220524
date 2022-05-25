@@ -3,7 +3,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 class StudentDBTest {
     @Test
@@ -13,20 +15,10 @@ class StudentDBTest {
         Student student3 = new HistoryStudent("Anjali", 22);
         List<Student> studentArray = new ArrayList<>(List.of(student1, student2, student3));
         var studentDB = new StudentDB(studentArray);
-        List<Student> actual = studentDB.list();
-        Assertions.assertEquals(studentArray, actual);
-    }
-
-    @Test
-    void shouldReturnStudentsAsString() {
-        Student student1 = new CSStudent("Raj", 15);
-        Student student2 = new CSStudent("Mohini", 15);
-        Student student3 = new HistoryStudent("Anjali", 22);
-        List<Student> studentArray = new ArrayList<>(List.of(student1, student2, student3));
-        var studentDB = new StudentDB(studentArray);
-        String expected = "Raj: " + student1.getId() + ";\n" + "Mohini: " + student2.getId() + ";\n" + "Anjali: " + student3.getId() + ";\n";
-        String actual = studentDB.toString();
-        Assertions.assertEquals(expected, actual);
+        Collection<Student> allStudents = studentDB.list();
+        int actual = studentDB.list().size();
+        Assertions.assertEquals(3, actual);
+        Assertions.assertTrue(allStudents.containsAll(studentArray));
     }
 
     @Test
@@ -36,10 +28,12 @@ class StudentDBTest {
         Student student3 = new HistoryStudent("Anjali", 22);
         List<Student> studentArray = new ArrayList<>(List.of(student1, student2));
         var studentDB = new StudentDB(studentArray);
-        studentDB.addStudent(student3);
-        List<Student> expected = new ArrayList<>(List.of(student1, student2, student3));
-        List<Student> actual = studentDB.list();
-        Assertions.assertEquals(expected, actual);
+        studentDB.addStudent(student3.getId(), student3);
+        Collection<Student> expected = new ArrayList<>(List.of(student1, student2, student3));
+        Collection<Student> actualList = studentDB.list();
+        int actual = studentDB.list().size();
+        Assertions.assertEquals(3, actual);
+        Assertions.assertTrue(actualList.containsAll(expected));
     }
 
     @Test
@@ -49,57 +43,23 @@ class StudentDBTest {
         Student student3 = new HistoryStudent("Anjali", 22);
         List<Student> studentArray = new ArrayList<>(List.of(student1, student2, student3));
         var studentDB = new StudentDB(studentArray);
-        studentDB.removeStudent(2);
-        List<Student> expected = new ArrayList<>(List.of(student1, student3));
-        List<Student> actual = studentDB.list();
-        Assertions.assertEquals(expected, actual);
+        studentDB.removeStudent(student2.getId());
+        List<Student> remainingStudents = new ArrayList<>(List.of(student1, student3));
+        Collection<Student> actual = studentDB.list();
+        int actualLength = studentDB.list().size();
+        Assertions.assertEquals(2, actualLength);
+        Assertions.assertTrue(actual.containsAll(remainingStudents));
     }
 
     @Test
-    void shouldReturnCSStringIfStudentIsOfClassCSStudent() {
+    void shouldFailIfIdAlreadyExists() {
         Student student1 = new CSStudent("Raj", 15);
-        Student student2 = new HistoryStudent("Anjali", 22);
-        List<Student> studentArray = new ArrayList<>(List.of(student1, student2));
+        List<Student> studentArray = new ArrayList<>(List.of(student1));
         var studentDB = new StudentDB(studentArray);
-        List<Student> students = studentDB.list();
-        String expected = "I am a CS student!";
-        String actual = students.get(0).returnSubject();
-        Assertions.assertEquals(expected, actual);
-    }
+        try {
+            studentDB.addStudent(student1.getId(), student1);
+            Assertions.fail();
+        } catch (RuntimeException e) {}
 
-    @Test
-    void shouldReturnHistoryStringIfStudentIsOfClassHistoryStudent() {
-        Student student1 = new CSStudent("Raj", 15);
-        Student student2 = new HistoryStudent("Anjali", 22);
-        List<Student> studentArray = new ArrayList<>(List.of(student1, student2));
-        var studentDB = new StudentDB(studentArray);
-        List<Student> students = studentDB.list();
-        String expected = "I am a history student!";
-        String actual = students.get(1).returnSubject();
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    void shouldReturnCorrectNumberOfCSModules(){
-        Student student1 = new CSStudent("Raj", 15);
-        Student student2 = new HistoryStudent("Anjali", 22);
-        List<Student> studentArray = new ArrayList<>(List.of(student1, student2));
-        var studentDB = new StudentDB(studentArray);
-        List<Student> students = studentDB.list();
-        int expected = 15;
-        int actual = students.get(0).returnNumberOfModules();
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    void shouldReturnCorrectNumberOfHistoryModules(){
-        Student student1 = new CSStudent("Raj", 15);
-        Student student2 = new HistoryStudent("Anjali", 22);
-        List<Student> studentArray = new ArrayList<>(List.of(student1, student2));
-        var studentDB = new StudentDB(studentArray);
-        List<Student> students = studentDB.list();
-        int expected = 22;
-        int actual = students.get(1).returnNumberOfModules();
-        Assertions.assertEquals(expected, actual);
     }
 }
